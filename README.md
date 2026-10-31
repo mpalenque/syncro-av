@@ -1,4 +1,4 @@
-# Syncro A/V — página de la charla
+# Synchrony — página de la charla
 
 Sitio estático (HTML + CSS + JS, sin build). Videos en loop, sin sonido, cortados de tu portfolio.
 
@@ -8,11 +8,11 @@ syncro-av/
 ├── styles.css
 ├── main.js         ← carga perezosa de videos + eventos de Analytics
 └── assets/
-    ├── video/      hero.mp4, particles.mp4, coloso.mp4, water.mp4, perfo.mp4, ciclonegro.mp4
-    └── img/        posters, fotos del collage, og.jpg (preview al compartir el link)
+    ├── video/      hero.mp4, particles.mp4, perfo.mp4
+    └── img/        posters, retrato, fotos del collage, og.jpg (preview al compartir el link)
 ```
 
-Total ≈ 9 MB. Los videos de secciones solo se descargan cuando el visitante se acerca a ellos.
+Total ≈ 6 MB. Los videos de secciones solo se descargan cuando el visitante se acerca a ellos.
 
 ## 1. Publicar en GitHub Pages
 
@@ -32,8 +32,8 @@ Si la publicás en otra URL, actualizá `og:url` y `og:image` en `index.html` (l
 
 ## 2. Google Analytics 4
 
-1. Entrá a **analytics.google.com → Admin → Create → Property**. Nombre: *Syncro A/V*, zona horaria Buenos Aires.
-2. Elegí **Web**, URL `mpalenque.github.io`, nombre del stream *Syncro A/V*. Dejá activado *Enhanced measurement*.
+1. Entrá a **analytics.google.com → Admin → Create → Property**. Nombre: *Synchrony*, zona horaria Buenos Aires.
+2. Elegí **Web**, URL `mpalenque.github.io`, nombre del stream *Synchrony*. Dejá activado *Enhanced measurement*.
 3. Copiá el **Measurement ID** (`G-XXXXXXXXXX`).
 4. En `index.html`, línea 22, reemplazá el placeholder:
    ```js
@@ -48,8 +48,7 @@ Qué vas a ver:
 |---|---|
 | Visitas, países, ciudades | Reports → Realtime / Demographics |
 | Scroll hasta el final, links externos | Automático (Enhanced measurement) |
-| `book_button` | Clic en “Book the talk” del hero |
-| `view_book_section` | El visitante llegó a la sección de contacto |
+| `view_contact_section` | El visitante llegó a la sección de contacto |
 | `contact_email_click` | Clic en tu email |
 
 Marcá `contact_email_click` como **key event** (Admin → Events, aparece después del primer clic) para verlo como conversión.

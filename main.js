@@ -114,15 +114,15 @@
     }
   });
 
-  // Fires once when a visitor reaches the booking section.
-  var book = document.getElementById('book');
-  if (book && hasIO) {
+  // Fires once when a visitor reaches the contact section.
+  var contact = document.getElementById('contact');
+  if (contact && hasIO) {
     var seen = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) {
-        track('view_book_section');
+        track('view_contact_section');
         seen.disconnect();
       }
     }, { threshold: 0.4 });
-    seen.observe(book);
+    seen.observe(contact);
   }
 })();
