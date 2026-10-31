@@ -32,6 +32,8 @@ Si la publicás en otra URL, actualizá `og:url` y `og:image` en `index.html` (l
 
 ## 2. Google Analytics 4
 
+Ya está configurado: propiedad **Sync A/V** en la cuenta *mpalenque*, ID `G-1R1W8FN1Y5` (línea 22 de `index.html`). Los pasos de abajo quedan como referencia.
+
 1. Entrá a **analytics.google.com → Admin → Create → Property**. Nombre: *Sync A/V*, zona horaria Buenos Aires.
 2. Elegí **Web**, URL `mpalenque.github.io`, nombre del stream *Sync A/V*. Dejá activado *Enhanced measurement*.
 3. Copiá el **Measurement ID** (`G-XXXXXXXXXX`).
