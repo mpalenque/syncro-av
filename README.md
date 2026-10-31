@@ -1,4 +1,4 @@
-# Synchrony — página de la charla
+# Sync A/V — página de la charla
 
 Sitio estático (HTML + CSS + JS, sin build). Videos en loop, sin sonido, cortados de tu portfolio.
 
@@ -32,8 +32,8 @@ Si la publicás en otra URL, actualizá `og:url` y `og:image` en `index.html` (l
 
 ## 2. Google Analytics 4
 
-1. Entrá a **analytics.google.com → Admin → Create → Property**. Nombre: *Synchrony*, zona horaria Buenos Aires.
-2. Elegí **Web**, URL `mpalenque.github.io`, nombre del stream *Synchrony*. Dejá activado *Enhanced measurement*.
+1. Entrá a **analytics.google.com → Admin → Create → Property**. Nombre: *Sync A/V*, zona horaria Buenos Aires.
+2. Elegí **Web**, URL `mpalenque.github.io`, nombre del stream *Sync A/V*. Dejá activado *Enhanced measurement*.
 3. Copiá el **Measurement ID** (`G-XXXXXXXXXX`).
 4. En `index.html`, línea 22, reemplazá el placeholder:
    ```js
