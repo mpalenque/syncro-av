@@ -23,16 +23,26 @@
   }
 
   var hero = document.querySelector('.hero-video');
-  if (hero) {
-    if (reduceMotion.matches) {
-      hero.removeAttribute('autoplay');
-      hero.pause();
-    } else {
-      safePlay(hero);
-    }
+  var loops = Array.prototype.slice.call(document.querySelectorAll('video.loop'));
+  var videos = (hero ? [hero] : []).concat(loops);
+
+  // Videos currently on screen. Only these should be playing.
+  var onScreen = new Set();
+
+  function shouldPlay(v) {
+    return onScreen.has(v) && !document.hidden && !reduceMotion.matches;
   }
 
-  var loops = Array.prototype.slice.call(document.querySelectorAll('video.loop'));
+  function resumeVisible() {
+    videos.forEach(function (v) {
+      if (shouldPlay(v)) { load(v); if (v.paused) safePlay(v); }
+    });
+  }
+
+  if (reduceMotion.matches && hero) {
+    hero.removeAttribute('autoplay');
+    hero.pause();
+  }
 
   if (hasIO) {
     var preloader = new IntersectionObserver(function (entries) {
@@ -47,34 +57,32 @@
     var player = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         var v = entry.target;
-        if (entry.isIntersecting && !reduceMotion.matches) {
-          load(v);
-          safePlay(v);
-        } else {
-          v.pause();
-        }
+        if (entry.isIntersecting) onScreen.add(v); else onScreen.delete(v);
+        if (shouldPlay(v)) { load(v); safePlay(v); } else { v.pause(); }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
 
-    loops.forEach(function (v) { preloader.observe(v); player.observe(v); });
-
-    if (hero) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !reduceMotion.matches) safePlay(hero);
-          else hero.pause();
-        });
-      }).observe(hero);
-    }
+    loops.forEach(function (v) { preloader.observe(v); });
+    videos.forEach(function (v) { player.observe(v); });
   } else {
-    loops.forEach(function (v) { load(v); if (!reduceMotion.matches) safePlay(v); });
+    videos.forEach(function (v) { onScreen.add(v); load(v); });
+    resumeVisible();
   }
 
+  // Pause everything while the tab is hidden; resume what is on screen when it comes back.
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) {
-      if (hero) hero.pause();
-      loops.forEach(function (v) { v.pause(); });
-    }
+    if (document.hidden) videos.forEach(function (v) { v.pause(); });
+    else resumeVisible();
+  });
+  window.addEventListener('pageshow', resumeVisible);
+  window.addEventListener('focus', resumeVisible);
+
+  // If the browser pauses a visible video on its own (power saving, background
+  // tab policies), start it again.
+  videos.forEach(function (v) {
+    v.addEventListener('pause', function () {
+      if (shouldPlay(v)) setTimeout(function () { if (shouldPlay(v) && v.paused) safePlay(v); }, 250);
+    });
   });
 
   /* ── Reveal on scroll ─────────────────────────────────────────── */
